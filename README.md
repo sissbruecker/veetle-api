@@ -3,16 +3,33 @@
 This is a simple API for checking what's running on Veetle.
 
 What it does:
- * Load a list of channels that are currently online
- * Load details for each channel (bitrate, popularity, broadcaster, logos, playlist...)
- * Create a schedule from a channels playlist
+* Load a list of channels that are currently online
+* Load details for each channel (bitrate, popularity, broadcaster, logos, playlist...)
+* Create a schedule from a channels playlist
 
 ## Getting started
 
-Load the channel list
+`
+// Create the API object
+VeetleAPI api = new VeetleAPI();
 
-`List<String> channelIds = new VeetleAPI().getChannelList();`
+// Load the channel list
 
-Load details for a channel
+List<String> channelIds = api.getChannelList();
 
-`Channel channel = new VeetleAPI().getChannel(channelId);`
+// Load details for a channel
+
+Channel channel = new VeetleAPI().getChannel(channelIds.get(0));
+
+// Do something with it
+
+System.out.println("Title: " + channel.getTitle());
+System.out.println("Description: " + channel.getDescription());
+System.out.println("Title: " + channel.getUserName());
+System.out.println("View URL: http://veetle.com/index.php/channel/view#" + channel.getChannelId());
+`
+
+## Dependencies
+
+- JSON Simple http://code.google.com/p/json-simple/
+- Transmorph http://transmorph.sourceforge.net/
