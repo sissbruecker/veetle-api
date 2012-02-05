@@ -22,7 +22,3 @@ What it does:
     System.out.println("Broadcaster: " + channel.getUserName());
     System.out.println("View URL: http://veetle.com/index.php/channel/view#" + channel.getChannelId());
 
-## Dependencies
-
-- JSON Simple http://code.google.com/p/json-simple/
-- Transmorph http://transmorph.sourceforge.net/

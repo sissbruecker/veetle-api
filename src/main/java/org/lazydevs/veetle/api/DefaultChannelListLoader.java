@@ -26,9 +26,10 @@ import java.util.logging.Logger;
  */
 public class DefaultChannelListLoader implements ChannelListLoader {
 
-    public static final Logger log = Logger.getLogger(DefaultChannelListLoader.class.getSimpleName());
+    private static final Logger log = Logger.getLogger(DefaultChannelListLoader.class.getSimpleName());
 
-    public static final String DEFAULT_VEETLE_CHANNEL_LISTING_URL = "http://veetle.com/channel-listing-cross-site.js";
+    private static final String DEFAULT_VEETLE_CHANNEL_LISTING_URL = "http://veetle.com/channel-listing-cross-site.js";
+    private static final int DEFAULT_VEETLE_TIMEOUT = 10000;
 
     private String veetleChannelListingUrl = DEFAULT_VEETLE_CHANNEL_LISTING_URL;
 
@@ -46,20 +47,19 @@ public class DefaultChannelListLoader implements ChannelListLoader {
 
         // Load channel data from Veetle
         if (veetleChannelListingUrl == null || veetleChannelListingUrl.length() == 0) {
-            throw new LoadChannelListException("URL for loading the channel list is null or empty.");
+            throw new IllegalArgumentException("URL for loading the channel list is null or empty.");
         }
 
         String channelRequestResult = null;
 
         try {
-            log.info("Start loading Veetle channel list from URL: " + veetleChannelListingUrl);
+            log.fine("Start loading Veetle channel list from URL: " + veetleChannelListingUrl);
 
             URL veetleListingUrl = new URL(veetleChannelListingUrl + "?noCache=" + new Date().getTime());
-
             URLConnection veetleConnection = veetleListingUrl.openConnection();
 
-            veetleConnection.setConnectTimeout(10000);
-            veetleConnection.setReadTimeout(10000);
+            veetleConnection.setConnectTimeout(DEFAULT_VEETLE_TIMEOUT);
+            veetleConnection.setReadTimeout(DEFAULT_VEETLE_TIMEOUT);
 
             BufferedReader in = new BufferedReader(new InputStreamReader(veetleConnection.getInputStream()));
 
@@ -67,16 +67,18 @@ public class DefaultChannelListLoader implements ChannelListLoader {
 
             in.close();
 
-            log.info("Channel list loaded");
+            log.fine("Channel list loaded");
 
         } catch (MalformedURLException e) {
+            log.log(Level.WARNING, "Invalid URL provided.", e);
             throw new LoadChannelListException("Invalid URL provided.", e);
         } catch (IOException e) {
+            log.log(Level.WARNING,"Error loading channel list from URL: " + veetleChannelListingUrl, e);
             throw new LoadChannelListException("Error loading channel list from URL: " + veetleChannelListingUrl, e);
         }
 
         // Parse channel data to JSON
-        log.info("Start parsing channel list.");
+        log.fine("Start parsing channel list.");
 
         if (channelRequestResult != null && channelRequestResult.length() > 0) {
 
@@ -90,13 +92,13 @@ public class DefaultChannelListLoader implements ChannelListLoader {
                 }
 
             } catch (Exception ex) {
-                 log.log(Level.SEVERE, "Error parsing channel list.", ex);
 
+                log.log(Level.WARNING, "Error parsing channel list.", ex);
                 throw new LoadChannelListException("Error parsing channel list.", ex);
             }
         }
 
-        log.info("Finished parsing channel list. Parsed " + channels.size() + " channels");
+        log.fine("Finished parsing channel list. [count=" + channels.size() + "]");
 
         return channels;
     }
