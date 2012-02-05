@@ -15,7 +15,7 @@ What it does:
     // Load the channel list
     List<String> channelIds = api.getChannelList();
     // Load details for a channel
-    Channel channel = new VeetleAPI().getChannel(channelIds.get(0));
+    Channel channel = api.getChannel(channelIds.get(0));
     // Do something with it
     System.out.println("Title: " + channel.getTitle());
     System.out.println("Description: " + channel.getDescription());
