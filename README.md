@@ -19,7 +19,7 @@ What it does:
     // Do something with it
     System.out.println("Title: " + channel.getTitle());
     System.out.println("Description: " + channel.getDescription());
-    System.out.println("Title: " + channel.getUserName());
+    System.out.println("Broadcaster: " + channel.getUserName());
     System.out.println("View URL: http://veetle.com/index.php/channel/view#" + channel.getChannelId());
 
 ## Dependencies
