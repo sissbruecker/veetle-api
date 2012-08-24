@@ -41,7 +41,7 @@ public class DefaultChannelLoaderTest {
         String json = loader.load("blablabla");
 
         Assert.assertNotNull(json);
-        Assert.assertTrue(json.contains("no channel with channel ID blablabla exists"));
+        Assert.assertTrue(json.contains("\"success\":false"));
     }
 
     @Test

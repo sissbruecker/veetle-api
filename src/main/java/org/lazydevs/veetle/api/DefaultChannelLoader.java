@@ -22,7 +22,7 @@ public class DefaultChannelLoader implements ChannelLoader {
 
     public static final Logger log = Logger.getLogger(DefaultChannelLoader.class.getSimpleName());
 
-    public static final String DEFAULT_VEETLE_CHANNEL_DETAILS_URL = "http://veetle.com/index.php/channel/ajaxInfo/";
+    public static final String DEFAULT_VEETLE_CHANNEL_DETAILS_URL = "http://veetle.com/index.php/stream/ajaxInfo";
 
     private String veetleChannelDetailsUrl = DEFAULT_VEETLE_CHANNEL_DETAILS_URL;
 
@@ -57,7 +57,7 @@ public class DefaultChannelLoader implements ChannelLoader {
         try {
             log.info("Start loading channel: " + channelId);
 
-            URL url = new URL(veetleChannelDetailsUrl + "/" + channelId + "/" + new Date().getTime());
+            URL url = new URL(veetleChannelDetailsUrl + "/" + channelId);// + "/" + new Date().getTime());
             URLConnection veetleConnection = url.openConnection();
 
             veetleConnection.setConnectTimeout(10000);
