@@ -93,6 +93,8 @@ public class DefaultChannelParser implements ChannelParser {
 
             ScheduleBuilder.createSchedule(channel);
 
+            channel.setHasSchedule(channel.getSchedule() != null && channel.getSchedule().size() > 0);
+
         } catch (Throwable t) {
             throw new ParseChannelException("Error parsing channel", t);
         }

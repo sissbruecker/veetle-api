@@ -43,6 +43,8 @@ public class Channel implements Serializable {
 
     private List<PlayListItem> playlist;
 
+    private boolean hasSchedule;
+
     private List<ScheduleItem> schedule;
 
     private ScheduleItem currentItem;
@@ -213,6 +215,14 @@ public class Channel implements Serializable {
 
     public void setPlaylist(List<PlayListItem> playlist) {
         this.playlist = playlist;
+    }
+
+    public boolean isHasSchedule() {
+        return hasSchedule;
+    }
+
+    public void setHasSchedule(boolean hasSchedule) {
+        this.hasSchedule = hasSchedule;
     }
 
     public List<ScheduleItem> getSchedule() {

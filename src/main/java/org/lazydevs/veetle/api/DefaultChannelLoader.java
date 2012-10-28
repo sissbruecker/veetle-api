@@ -24,7 +24,11 @@ public class DefaultChannelLoader implements ChannelLoader {
 
     public static final String DEFAULT_VEETLE_CHANNEL_DETAILS_URL = "http://veetle.com/index.php/stream/ajaxInfo";
 
+    private static final int DEFAULT_VEETLE_TIMEOUT = 20000;
+
     private String veetleChannelDetailsUrl = DEFAULT_VEETLE_CHANNEL_DETAILS_URL;
+
+    private int timeOut = DEFAULT_VEETLE_TIMEOUT;
 
     public String getVeetleChannelDetailsUrl() {
         return veetleChannelDetailsUrl;
@@ -32,6 +36,14 @@ public class DefaultChannelLoader implements ChannelLoader {
 
     public void setVeetleChannelDetailsUrl(String veetleChannelDetailsUrl) {
         this.veetleChannelDetailsUrl = veetleChannelDetailsUrl;
+    }
+
+    public int getTimeOut() {
+        return timeOut;
+    }
+
+    public void setTimeOut(int timeOut) {
+        this.timeOut = timeOut;
     }
 
     public List<String> load(List<String> channelIds) throws LoadChannelException {
@@ -60,8 +72,8 @@ public class DefaultChannelLoader implements ChannelLoader {
             URL url = new URL(veetleChannelDetailsUrl + "/" + channelId);// + "/" + new Date().getTime());
             URLConnection veetleConnection = url.openConnection();
 
-            veetleConnection.setConnectTimeout(10000);
-            veetleConnection.setReadTimeout(10000);
+            veetleConnection.setConnectTimeout(timeOut);
+            veetleConnection.setReadTimeout(timeOut);
 
             BufferedReader in = new BufferedReader(new InputStreamReader(veetleConnection.getInputStream()));
 

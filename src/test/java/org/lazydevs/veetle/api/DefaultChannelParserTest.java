@@ -85,4 +85,11 @@ public class DefaultChannelParserTest {
         Assert.assertEquals(1328444121000l, item.getStartTime());
 
     }
+
+    @Test()
+    public void testLoadAndParseChannel() throws ParseChannelException, LoadChannelException {
+
+        String json = new DefaultChannelLoader().load("4c39e52adb486");
+        Channel channel = new DefaultChannelParser().parseChannel(json);
+    }
 }

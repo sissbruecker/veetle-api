@@ -29,9 +29,19 @@ public class DefaultChannelListLoader implements ChannelListLoader {
     private static final Logger log = Logger.getLogger(DefaultChannelListLoader.class.getSimpleName());
 
     private static final String DEFAULT_VEETLE_CHANNEL_LISTING_URL = "http://veetle.com/channel-listing-cross-site.js";
-    private static final int DEFAULT_VEETLE_TIMEOUT = 10000;
+    private static final int DEFAULT_VEETLE_TIMEOUT = 20000;
 
     private String veetleChannelListingUrl = DEFAULT_VEETLE_CHANNEL_LISTING_URL;
+
+    private int timeOut = DEFAULT_VEETLE_TIMEOUT;
+
+    public int getTimeOut() {
+        return timeOut;
+    }
+
+    public void setTimeOut(int timeOut) {
+        this.timeOut = timeOut;
+    }
 
     public String getVeetleChannelListingUrl() {
         return veetleChannelListingUrl;
@@ -58,8 +68,8 @@ public class DefaultChannelListLoader implements ChannelListLoader {
             URL veetleListingUrl = new URL(veetleChannelListingUrl + "?noCache=" + new Date().getTime());
             URLConnection veetleConnection = veetleListingUrl.openConnection();
 
-            veetleConnection.setConnectTimeout(DEFAULT_VEETLE_TIMEOUT);
-            veetleConnection.setReadTimeout(DEFAULT_VEETLE_TIMEOUT);
+            veetleConnection.setConnectTimeout(timeOut);
+            veetleConnection.setReadTimeout(timeOut);
 
             BufferedReader in = new BufferedReader(new InputStreamReader(veetleConnection.getInputStream()));
 
